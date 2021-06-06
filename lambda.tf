@@ -13,6 +13,20 @@ resource "aws_lambda_function" "test_lambda" {
 
 resource "aws_iam_role" "iam_for_lambda" {
   name = "iam_for_lambda"
+  inline_policy {
+    name = "lambda-s3-permissions"
+
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action   = ["s3:*"]
+          Effect   = "Allow"
+          Resource = "arn:aws:s3:::dasless-images"
+        },
+      ]
+    })
+  }
 
   assume_role_policy = <<EOF
 {
@@ -25,11 +39,6 @@ resource "aws_iam_role" "iam_for_lambda" {
       },
       "Effect": "Allow",
       "Sid": ""
-    },
-    {
-        "Effect": "Allow",
-        "Action": "s3:*",
-        "Resource": "arn:aws:s3:::dasless-images"
     }
   ]
 }
