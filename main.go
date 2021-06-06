@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"image/jpeg"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
@@ -58,8 +59,8 @@ func HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 	client := s3.NewFromConfig(cfg)
 
 	imageObject, err := client.GetObject(context.TODO(), &s3.GetObjectInput{
-		Bucket: aws.String("dasless-images"),
-		Key:    aws.String("assets/perm/22cdhdhxjui6pa7l76n7zfbonu"),
+		Bucket: aws.String(os.Getenv("SOURCE_BUCKET")),
+		Key:    aws.String(os.Getenv("SOURCE_ROOT_PATH") + "perm/" + request.AssetId),
 	})
 	if err != nil {
 		log.Fatal(err)
