@@ -37,7 +37,7 @@ func HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (ev
 		log.Fatal(err)
 	}
 
-	stringBody := base64.RawURLEncoding.EncodeToString(body)
+	stringBody := base64.StdEncoding.EncodeToString(body)
 
 	return events.APIGatewayProxyResponse{
 		Body:            stringBody,

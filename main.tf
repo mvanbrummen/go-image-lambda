@@ -20,7 +20,7 @@ variable "stage_name" {
 
 # API Gateway + Lambda
 module "lambda_api" {
-    source         = "git@github.com:mvanbrummen/tf-lambda-proxy-apigw.git"
+  source = "git@github.com:mvanbrummen/tf-lambda-proxy-apigw.git"
 
   # General options
   project    = "go-image-lambda"
@@ -30,13 +30,13 @@ module "lambda_api" {
   # Lambda options
   lambda_name    = "go-image-lambda"
   lambda_runtime = "go1.x"
-  lambda_memory  = 128 
+  lambda_memory  = 128
   lambda_timeout = 10
   lambda_package = "function.zip"
   lambda_handler = "main"
-  
+
   lambda_env = {
-    SOURCE_BUCKET = "dasless-images"
+    SOURCE_BUCKET    = "dasless-images"
     SOURCE_ROOT_PATH = "assets/"
   }
 }
